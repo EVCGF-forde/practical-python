@@ -1,6 +1,7 @@
 # pcost.py
 #
 # Exercise 1.27
+import sys
 import csv
 def portfolio_cost(filename):
     total = 0
@@ -16,4 +17,8 @@ def portfolio_cost(filename):
                 print(f'line {row} cannot be parsed for a share and/or price')
     print(f'Total cost {round(total,2)}')
 
-#portfolio_cost('Data/portfolio.csv')
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+portfolio_cost(filename)
