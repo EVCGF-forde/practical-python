@@ -35,3 +35,13 @@ def calculate_change(portfolio, prices):
         portfolio_change += round(new_value - prev_value, 2)
     return(portfolio_total, portfolio_change)
 
+def make_report(portfolio, prices):
+    change_data = []
+    for item in portfolio:
+        change = prices[item['name']] - item['price']
+        change_data.append((item["name"], item["shares"], prices[item["name"]], change))
+    return change_data
+
+def print_report(change_data):
+    for item in change_data:
+        print(f'{item[0]:10s} {item[1]:10d} {item[2]:10.2f} {item[3]:10.2f}')
