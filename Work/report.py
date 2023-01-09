@@ -10,9 +10,8 @@ def read_portfolio(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
-            temp_dict = {'name':row[0], 'shares':int(row[1]), 'price':float(row[2])}
-            portfolio.append(temp_dict)
-
+            record = dict(zip(headers, row))
+            portfolio.append({'name':record['name'], 'shares':int(record['shares']), 'price':float(record['price'])})
     return portfolio
 
 def read_prices(filename):
@@ -50,7 +49,7 @@ def print_report(change_data):
         price_dollars = "${0}".format(item[2])
         print(f'{item[0]:>10s} {item[1]:>10d} {price_dollars:>10} {item[3]:>10.2f}')
 
-portfolio = read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfoliodate.csv')
 prices = read_prices('Data/prices.csv')
 change_data = make_report(portfolio, prices)
 print_report(change_data)
