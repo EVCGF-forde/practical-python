@@ -35,21 +35,26 @@ def calculate_change(portfolio, prices):
     return(portfolio_total, portfolio_change)
 
 def make_report(portfolio, prices):
-    change_data = []
+    report = []
     for item in portfolio:
         change = prices[item['name']] - item['price']
-        change_data.append((item["name"], item["shares"], prices[item["name"]], change))
-    return change_data
+        report.append((item["name"], item["shares"], prices[item["name"]], change))
+    return report
 
-def print_report(change_data):
+def print_report(report):
     headers = ('Name','Shares','Price','Change')
     print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}')
     print('---------- ---------- ---------- -----------')
-    for item in change_data:
+    for item in report:
         price_dollars = "${0}".format(item[2])
         print(f'{item[0]:>10s} {item[1]:>10d} {price_dollars:>10} {item[3]:>10.2f}')
 
-portfolio = read_portfolio('Data/portfoliodate.csv')
-prices = read_prices('Data/prices.csv')
-change_data = make_report(portfolio, prices)
-print_report(change_data)
+def portfolio_report(portfolio_filename, prices_filename):
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    return make_report(portfolio, prices)
+
+#portfolio = read_portfolio('Data/portfoliodate.csv')
+#prices = read_prices('Data/prices.csv')
+report = portfolio_report('Data/portfoliodate.csv', 'Data/prices.csv')
+print_report(report)
