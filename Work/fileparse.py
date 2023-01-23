@@ -10,15 +10,13 @@ def parse_csv(filename, *, select=None):
         headers = next(rows)
         indices = None if not select else [c for c, v in enumerate(headers) if v in select]
         if indices:
-            selected_headers = [v for c, v in enumerate(headers) if c in indices]
+            headers = [v for c, v in enumerate(headers) if c in indices]
         records = []
         for row in rows:
             if not row:
                 continue
             if indices:
-                selected_row_values = [v for c, v in enumerate(row) if c in indices]
-                record = dict(zip(selected_headers, selected_row_values))
-            else:
-                record = dict(zip(headers, row))
+                row = [v for c, v in enumerate(row) if c in indices]
+            record = dict(zip(headers, row))
             records.append(record)
     return records
